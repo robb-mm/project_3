@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Line Chart with D3.js</title>
+
+    <!-- Load Plotly JS from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- Load D3.js -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <!-- PapaParse Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+    <h2>Temperature Average Per Year</h2>
+    <div id="chart" style="width: 600px; height: 400px;"></div>
+
+    <script>
+        fetch('datasets/climdiv_state_year.csv').then(response => response.text()).then(csv => {
+            Papa.parse(csv, {
+                complete: function(results) {
+                    let csvdata = results.data;
+                    var st_list={}, year_list=[], temp_list=[];
+                    // console.log(csvdata[28][8]);
+                    for (let i=0; i<csvdata.length; i++) {
+                        if (year_list[0]) {
+                            year_list.push(csvdata[i][1]);
+                            temp_list.push(csvdata[i][2]);
+                        } else {
+                            year_list[0] = csvdata[i][1];
+                            temp_list[0] = csvdata[i][2];
+                        }
+                        
+                        if ((i+1 == csvdata.length) || (csvdata[i][0] != csvdata[i+1][0])) {
+                            st_list[csvdata[i][0]] = {"year": year_list, "temp": temp_list};
+                            year_list=[], temp_list=[];
+                        }
+                    }
+                    console.log(st_list["05"].temp);
+
+                    // st_list = {"01": {"year": [1895, 1896, 1897, 1898, 1899], "temp": [61.64166667, 64.26666667, 64.19166667, 62.98333333, 63.1]}};
+                    // console.log(st_list["01"]);
+        
+                }
+            });
+        });
+    </script>
+</body>
+</html>
