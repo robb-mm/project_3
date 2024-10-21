@@ -47,9 +47,9 @@ function buildLineChart(state_name) {
     };
     // console.log(trace.y);
     var layout = {
-        // title: 'Sales Over Time (with D3.js)',
+        title: 'Average Temperature Per Year',
         xaxis: { title: 'Year' },
-        yaxis: { title: 'Temperature Average' }
+        yaxis: { title: 'Average Temperature (Fahrenheit)' }
     };
 
     // Render the plot

@@ -45,7 +45,7 @@ function states_style(feature) {
     return {
         weight: 5,
         opacity: 1,
-        color: 'red',
+        color: 'blue',
         fillOpacity: 0
     };
 }
@@ -71,6 +71,43 @@ function getColor(d) {
            d > -0.5   ? '#FED976' :
                       '#FFEDA0';
 }
+
+// var info = L.control();
+
+// info.onAdd = function (myMap) {
+//     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+//     this.update();
+//     return this._div;
+// };
+
+// // method that we will use to update the control based on feature properties passed
+// info.update = function (props) {
+//     this._div.innerHTML = '<h4>US Population Density</h4>' +  (props ?
+//         '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+//         : 'Hover over a state');
+// };
+
+// info.addTo(myMap);
+
+// Create a legend to display information about our map.
+let legend = L.control({position: 'bottomright'});
+
+// When the layer control is added, insert a div with the class of "legend".
+legend.onAdd = function() {
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5];
+
+    // loop through our temperature intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 0.1) + '"></i> ' +
+            grades[i] + ((grades[i + 1]!=null) ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+// Add the info legend to the map.
+legend.addTo(myMap);
 
 function get_state(st_list, statefp) {
     for (let i=0; i<st_list.length; i++) {
