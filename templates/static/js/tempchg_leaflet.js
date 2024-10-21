@@ -21,12 +21,14 @@ d3.json("datasets/model_county.geojson").then(function(data) {
                 // console.log(st_list["01"]);
     
                 L.geoJson(data, {
+                    style: county_style,
                     onEachFeature: function(feature, layer) {
                         let tempchg = feature.properties.tempchg ? feature.properties.tempchg.toFixed(2) : null;
+                        let tempchg_c = feature.properties.tempchg_c ? feature.properties.tempchg_c.toFixed(2) : null;
                         // let state = get_state(st_list, feature.properties.STATEFP);
                         let state = st_list[feature.properties.STATEFP]; // ? st_list[feature.properties.STATEFP][8] : null;
                         // console.log(st_list[feature.properties.STATEFP]);
-                        layer.bindPopup(`<h3>${feature.properties.NAME}, ${state}</h3><hr><p>Temperature Change: ${tempchg}F<br> (year 1895 to 2019)</p>`);
+                        layer.bindPopup(`<h3>${feature.properties.NAME}, ${state}</h3><hr><p>Temperature Change<br>${tempchg} F (${tempchg_c} C)<br><br> year: 1895-2019</p>`);
                     }
                 }).addTo(myMap);
             }
@@ -36,18 +38,38 @@ d3.json("datasets/model_county.geojson").then(function(data) {
 
 // Load and add the second GeoJSON layer
 d3.json('datasets/us-states.geojson').then(function(data) {
-    var geojsonLayer2 = L.geoJson(data, {style: style}).addTo(myMap);
+    var geojsonLayer2 = L.geoJson(data, {style: states_style}).addTo(myMap);
 });
 
-function style(feature) {
+function states_style(feature) {
     return {
-        // fillColor: getColor(feature.properties.density),
         weight: 5,
         opacity: 1,
         color: 'red',
-        // dashArray: '3',
         fillOpacity: 0
     };
+}
+
+function county_style(feature) {
+    return {
+        fillColor: getColor(feature.properties.tempchg),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
+function getColor(d) {
+    return d > 2.5 ? '#800026' :
+           d > 2.0  ? '#BD0026' :
+           d > 1.5  ? '#E31A1C' :
+           d > 1.0  ? '#FC4E2A' :
+           d > 0.5   ? '#FD8D3C' :
+           d > 0.0   ? '#FEB24C' :
+           d > -0.5   ? '#FED976' :
+                      '#FFEDA0';
 }
 
 function get_state(st_list, statefp) {
