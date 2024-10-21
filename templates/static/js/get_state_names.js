@@ -10,7 +10,7 @@ fetch('datasets/model_state.csv').then(response => response.text()).then(csv => 
                 state_names[csvdata[i][0]] = csvdata[i][8];
                 state_fips[csvdata[i][8]] = csvdata[i][0];
             }
-            // console.log(state_names["01"]);
+            // console.log(state_fips["Alabama"]);
 
         }
     });
