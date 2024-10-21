@@ -1,5 +1,5 @@
 var myMap = L.map('map', {
-    center: [38.5, -97],
+    center: [39.5, -97],
     zoom: 5
 });
 
@@ -34,14 +34,20 @@ d3.json("datasets/model_county.geojson").then(function(data) {
     });
 });
 
-function build_stlist(data) {
-    // let st_list = {};
+// Load and add the second GeoJSON layer
+d3.json('datasets/us-states.geojson').then(function(data) {
+    var geojsonLayer2 = L.geoJson(data, {style: style}).addTo(myMap);
+});
 
-    for (let i=0; i<data.length; i++) {
-        st_list[data[i][0]] = data[i][8];
-    }
-    
-    // return st_list;
+function style(feature) {
+    return {
+        // fillColor: getColor(feature.properties.density),
+        weight: 5,
+        opacity: 1,
+        color: 'red',
+        // dashArray: '3',
+        fillOpacity: 0
+    };
 }
 
 function get_state(st_list, statefp) {
