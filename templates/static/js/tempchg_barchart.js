@@ -3,7 +3,7 @@ let fullData = [];
 let fullLabels = [];
 
 // Fetch the CSV file and process data
-fetch('model_county.csv')
+fetch('datasets/model_county.csv')
     .then(response => response.text())
     .then(data => {
         const rows = data.split('\n').slice(1); // Skip the header row

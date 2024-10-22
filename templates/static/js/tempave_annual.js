@@ -27,15 +27,17 @@ let st_list={};
                 // Populate the droplist
                 for (var key in state_fips)
                     id_droplist.append("option").text(key);
-                
             }
         });
     });
 // }
 
+let id_droplist = d3.select("#selCountyset");
+id_droplist.length = 0;
+
 function buildLineChart(state_name) {
     let fips = state_fips[state_name];
-    console.log(`${state_name} fips: ${fips}`);
+    // console.log(`${state_name} fips: ${fips}`);
     let temps = st_list[fips].temp.slice(0, 10);
     // Create the trace for the line chart
     var trace = {
@@ -54,6 +56,26 @@ function buildLineChart(state_name) {
 
     // Render the plot
     Plotly.newPlot('chart', [trace], layout);
+
+    let id_droplist = d3.select("#selCountyset");
+    id_droplist.html("<option> </option>");
+
+    // id_droplist.append("option").text("a");
+    // console.log(id_droplist.options.length);
+    
+    // while (id_droplist.options.length > 0) {
+    //     id_droplist.remove(0);
+    // }
+    
+    for (let cty_key in county_fips[state_name]) {
+        id_droplist.append("option").text(cty_key);
+    };
+}
+
+function buildCountyLineChart(county_name) {
+    let id_droplist = document.getElementById("selDataset");
+    let state_name = id_droplist.options[id_droplist.selectedIndex].text;
+    console.log(county_fips[state_name]);
 }
 
 // Function for event listener
@@ -64,8 +86,15 @@ function optionChanged(state_name) {
   // console.log(" E N D   _________")
 }
 
+function countyoptionChanged(county_name) {
+    buildCountyLineChart(event.currentTarget.value);
+
+    console.log(event.currentTarget.value);
+}
+
 // Initialize the dashboard
 // init();
 
 // Call optionChanged() when a change takes place to the DOM
 d3.select("#selDataset").on("change", optionChanged);
+d3.select("#selCountyset").on("change", countyoptionChanged);
