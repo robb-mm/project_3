@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>County Temperature Data</title>
+    
+    <!-- Link to your custom CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>County Temperature Data</h1>
+
+<!-- Dropdown to select a state -->
+<label for="state-select">Select State:</label>
+<select id="state-select">
+    <option value="">--Select a State--</option>
+</select>
+
+<!-- Dropdown to select a county (will be populated based on the selected state) -->
+<label for="county-select">Select County:</label>
+<select id="county-select" disabled>
+    <option value="">--Select a County--</option>
+</select>
+
+
+<!-- Smaller Canvas for the Bar Chart -->
+<canvas id="temperatureChart" width="300" height="150"></canvas>
+
+
+<!-- Link to your custom JS file -->
+<script src="script.js"></script>
+
+</body>
+</html>
