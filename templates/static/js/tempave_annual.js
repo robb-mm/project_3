@@ -56,24 +56,21 @@ let st_list={}, cty_list={};
     });
 // }
 
-let id_droplist = d3.select("#selCountyset");
-id_droplist.length = 0;
-
 function buildLineChart(state_name) {
     let fips = state_fips[state_name];
     // console.log(`${state_name} fips: ${fips}`);
     let temps = st_list[fips].temp.slice(0, 10);
     // Create the trace for the line chart
     var trace = {
-        x: st_list[fips].year, //["1895", "1896", "1897", "1898", "1899", "1900", "1901", "1902", "1903", "1904"],
-        y: st_list[fips].temp, //[61.64, 64.27, 64.19, 62.98, 63.1, 63.41, 61.39, 63.58, 61.97, 62.7],  //
+        x: st_list[fips].year,
+        y: st_list[fips].temp,
         mode: 'lines+markers',
         type: 'scatter',
         line: {color: 'blue'}
     };
     // console.log(trace.y);
     var layout = {
-        title: 'Average Temperature Per Year',
+        title: `Average Temperature Per Year<br>(${state_name})`,
         xaxis: { title: 'Year' },
         yaxis: { title: 'Average Temperature (Fahrenheit)' }
     };
@@ -84,13 +81,6 @@ function buildLineChart(state_name) {
     let id_droplist = d3.select("#selCountyset");
     id_droplist.html("<option> </option>");
 
-    // id_droplist.append("option").text("a");
-    // console.log(id_droplist.options.length);
-    
-    // while (id_droplist.options.length > 0) {
-    //     id_droplist.remove(0);
-    // }
-    
     for (let cty_key in county_fips[state_name]) {
         id_droplist.append("option").text(cty_key);
     };
@@ -112,7 +102,7 @@ function buildCountyLineChart(county_name) {
     };
     // console.log(trace.y);
     var layout = {
-        title: 'Average Temperature Per Year',
+        title: `Average Temperature Per Year<br>(${county_name.split(" ")[0]}, ${state_name})`,
         xaxis: { title: 'Year' },
         yaxis: { title: 'Average Temperature (Fahrenheit)' }
     };
