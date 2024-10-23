@@ -11,8 +11,12 @@ How To Use
 5) Scroll down a little, to see the three visualization links.
   a) Temperature Change Per Season;
   b) Temperature Change 1895-2019, 
-        a data visualization that shows a US map divided by counties.
-        Click a county to see its temperature change from 1895-2019;
+        a data visualization that shows a US map divided by counties,
+        click a county to see its temperature change from 1895-2019;
   c) Temperature Average Per Year,
-        a data visualization that shows only the State and County droplists.
-        Select an item from the droplists to see the temperature average per year.
+        a data visualization that shows only the State and County droplists,
+        select an item from the droplists to see the temperature average per year.
+
+
+Data Source: [data.world](https://data.world/environmentdata/analysis-of-noaa-climate-change-data)
+
