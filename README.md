@@ -9,10 +9,10 @@ How To Use
 3) Run the http server, type: python -m http.server
 4) Open a browser, put in address bar: http://localhost:8000
 5) Scroll down a little, to see the three visualization links.
-  a) Temperature Change Per Season
-  b) Temperature Change, 1895-2019 
-        A data visualization that shows a US map divided by counties.
-        Click a county to see its temperature change from 1895-2019.
-  c) Temperature Average Per Year
-        A data visualization that shows only the State and County droplists.
+  a) Temperature Change Per Season;
+  b) Temperature Change 1895-2019, 
+        a data visualization that shows a US map divided by counties.
+        Click a county to see its temperature change from 1895-2019;
+  c) Temperature Average Per Year,
+        a data visualization that shows only the State and County droplists.
         Select an item from the droplists to see the temperature average per year.
