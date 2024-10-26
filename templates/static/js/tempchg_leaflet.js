@@ -1,3 +1,5 @@
+var geojsonLayer1, geojsonLayer2;
+
 var myMap = L.map('map', {
     center: [39.5, -97],
     zoom: 5
@@ -20,7 +22,7 @@ d3.json("datasets/model_county.geojson").then(function(data) {
                     st_list[csvdata[i][0]] = csvdata[i][8];
                 // console.log(st_list["01"]);
     
-                L.geoJson(data, {
+                geojsonLayer1 = L.geoJson(data, {
                     style: county_style,
                     onEachFeature: function(feature, layer) {
                         let tempchg = feature.properties.tempchg ? feature.properties.tempchg.toFixed(2) : null;
@@ -38,7 +40,15 @@ d3.json("datasets/model_county.geojson").then(function(data) {
 
 // Load and add the second GeoJSON layer
 d3.json('datasets/us-states.geojson').then(function(data) {
-    var geojsonLayer2 = L.geoJson(data, {style: states_style}).addTo(myMap);
+    geojsonLayer2 = L.geoJson(data, {
+                            style: states_style,
+                            onEachFeature: function(feature, layer) {
+                                layer.on({
+                                    // mouseover: highlightFeature,
+                                    // mouseout: resetHighlight
+                                });
+                            }
+                        }).addTo(myMap);
 });
 
 function states_style(feature) {
@@ -72,6 +82,24 @@ function getColor(d) {
                       '#FFEDA0';
 }
 
+function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 4,
+        color: 'red',
+        dashArray: '',
+        fillOpacity: 0
+    });
+
+    layer.bringToFront();
+}
+
+function resetHighlight(e) {
+    geojsonLayer1.resetStyle(e.target);
+    console.log("resetHighlight");
+}
+
 // var info = L.control();
 
 // info.onAdd = function (myMap) {
@@ -97,11 +125,12 @@ legend.onAdd = function() {
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5];
 
-    // loop through our temperature intervals and generate a label with a colored square for each interval
+    div.innerHTML += '<b>Color Map (F)<b><br>'
+        // loop through our temperature intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor(grades[i] + 0.1) + '"></i> ' +
-            grades[i] + ((grades[i + 1]!=null) ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+            grades[i].toFixed(1) + ((grades[i + 1]!=null) ? ' &ndash; ' + grades[i + 1].toFixed(1) + '<br>' : '+');
     }
 
     return div;

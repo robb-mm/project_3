@@ -2,7 +2,7 @@ let myChart;
 let countyData = [];
 
 // Load CSV file and initialize dropdowns
-fetch('model_county.csv') // Replace with actual path to your CSV file
+fetch('datasets/model_county.csv') // Replace with actual path to your CSV file
     .then(response => response.text())
     .then(csvData => {
         Papa.parse(csvData, {
@@ -50,10 +50,10 @@ function updateChart() {
     if (!selectedData) return;
 
     const chartData = {
-        labels: ['Fall', 'Spring', 'Summer', 'Winter'],
+        labels: ['Spring', 'Summer', 'Fall', 'Winter'],
         datasets: [{
-            label: `Temperature Data for ${selectedCounty}`,
-            data: [selectedData.Fall, selectedData.Spring, selectedData.Summer, selectedData.Winter].map(Number),
+            label: `Temperature Change for ${selectedCounty}`,
+            data: [selectedData.Spring, selectedData.Summer, selectedData.Fall, selectedData.Winter].map(Number),
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)', 
                 'rgba(54, 162, 235, 0.2)', 
