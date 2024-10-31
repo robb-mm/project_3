@@ -19,7 +19,16 @@
 <body>
     <h2>Average Temperature Per Year</h2>
 
-    <div class="row">
+    <label for="selDataset">State:</label>
+    <select id="selDataset" onchange="optionChanged(this.value)">
+        <option value="">Select State</option>
+    </select>
+
+    <label for="selCountyset">County:</label>
+    <select id="selCountyset" onchange="countyoptionChanged(this.value)">
+        <option value="">Select County</option>
+    </select>
+    <!-- <div class="row">
       <div class="col-md-3">
         <div class="card card-body bg-light">
           <h6>State</h6>
@@ -29,7 +38,7 @@
           <select id="selCountyset" onchange="countyoptionChanged(this.value)"></select>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="col-md-9">
         <div id="chart"></div>
         <!-- <div id="bar"></div> -->

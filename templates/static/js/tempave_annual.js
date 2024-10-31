@@ -58,8 +58,7 @@ let st_list={}, cty_list={};
 
 function buildLineChart(state_name) {
     let fips = state_fips[state_name];
-    // console.log(`${state_name} fips: ${fips}`);
-    let temps = st_list[fips].temp.slice(0, 10);
+
     // Create the trace for the line chart
     var trace = {
         x: st_list[fips].year,
@@ -68,7 +67,7 @@ function buildLineChart(state_name) {
         type: 'scatter',
         line: {color: 'blue'}
     };
-    // console.log(trace.y);
+
     var layout = {
         title: `Average Temperature Per Year<br>(${state_name})`,
         xaxis: { title: 'Year' },
@@ -90,7 +89,7 @@ function buildCountyLineChart(county_name) {
     let id_droplist = document.getElementById("selDataset");
     let state_name = id_droplist.options[id_droplist.selectedIndex].text;
     // console.log(cty_list[county_fips[state_name][county_name]].temp);
-    // console.log(county_fips[state_name][county_name]);
+    console.log(county_fips[state_name][county_name]);
 
     // Create the trace for the line chart
     var trace = {
@@ -114,20 +113,18 @@ function buildCountyLineChart(county_name) {
 // Function for event listener
 function optionChanged(state_name) {
   // Build line chart each time a state is selected
-  // console.log(` S T A R T _________${event.currentTarget.value}`)
-  buildLineChart(event.currentTarget.value);
-  // console.log(" E N D   _________")
+  buildLineChart(state_name);
 }
 
 function countyoptionChanged(county_name) {
-    console.log(event.currentTarget.value);
+    console.log(county_name);
     
-    buildCountyLineChart(event.currentTarget.value);
+    buildCountyLineChart(county_name);
 }
 
 // Initialize the dashboard
 // init();
 
 // Call optionChanged() when a change takes place to the DOM
-d3.select("#selDataset").on("change", optionChanged);
-d3.select("#selCountyset").on("change", countyoptionChanged);
+// d3.select("#selDataset").on("change", optionChanged);
+// d3.select("#selCountyset").on("change", countyoptionChanged);
